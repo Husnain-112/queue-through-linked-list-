@@ -1,0 +1,65 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct queue
+{
+	int data;
+	int *link;
+};
+void delq(struct queue **pfront, struct queue **prear)
+{
+	int d;
+	struct queue *temp;
+	if(*pfront==NULL)
+	{
+		printf("Queue is Empty\n");
+		return;
+	}
+	temp=*pfront;
+	printf("Deleted data\t\n",temp->data);
+	d=temp->data;
+	*pfront=(*pfront)->link;
+	free(temp);
+}
+	void addq(struct queue **pfront,struct queue **prear, int data)
+	{
+		struct queue *r;
+		r=(struct queue*)malloc(sizeof(struct queue));
+			if(r==NULL)
+		{
+			printf("Queue is full\n");
+			return;
+		}
+		r->data=data;
+		r->link=NULL;
+		if(*pfront==NULL&& *prear==NULL)
+		{
+			*prear=r;
+			*pfront=r;
+		}
+		else
+		{
+			(*prear)->link=r;
+			*prear=r;
+		}
+		
+	}
+	void display(struct queue *pfront)
+	{
+		while(pfront!=NULL)
+		{
+			printf("%i\n",pfront->data);
+			pfront=pfront->link;
+		}
+	}
+void main()
+{
+	struct queue *pfront,*prear;
+	pfront=NULL;
+	prear=NULL;
+	addq(&pfront,&prear,10);
+	addq(&pfront,&prear,20);
+	addq(&pfront,&prear,30);
+	delq(&pfront,&prear);
+    display(pfront);
+
+}
